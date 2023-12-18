@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # MySQL database service
+  db:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: yuvraj
+      MYSQL_PASSWORD: yuvraj
+      MYSQL_ROOT_PASSWORD: yuvraj
+    ports:
+      - "3306:3306" # Map MySQL port
+
+  # Spring Boot application service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring_boot_app
+    ports:
+      - "8080:8080" # Map Spring Boot port
+    depends_on:
+      - db
